@@ -1,0 +1,55 @@
+@import "../../styleConsts";
+
+.todo {
+    width: 100%;
+    height: 75px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 26px;
+    color: $THIRD_COLOR;
+
+    border-bottom: 1px solid rgba(74, 73, 74, 0.5);
+    cursor: default;
+
+    &:hover {
+        background-color: $SECONDARY_COLOR_DARKER;
+        box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    &__content {
+        display: flex;
+        align-items: center;
+        font-size: 30px;
+    }
+
+    &__title {
+        width: 600px;
+        overflow-wrap: break-word;
+        //white-space: pre-wrap;
+    }
+
+    &__index {
+        margin-right: 10px;
+    }
+
+    &__checkbox {
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+        outline: 0
+    }
+
+    &__button {
+        @extend %button-reset;
+        width: 50px;
+        height: 50px;
+        background-color: $WARN_COLOR;
+        border-radius: 6px;
+        color: #FFFFFF;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.36);
+        cursor: pointer;
+    }
+}

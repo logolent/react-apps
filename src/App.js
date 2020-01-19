@@ -18,7 +18,7 @@ class App extends React.Component {
 
     componentDidMount() {
         setTimeout(() => this.setState({
-            todos: JSON.parse(localStorage.getItem('todos')),
+            todos: JSON.parse(localStorage.getItem('todos')) || [],
             loading: false
         }), 1000)
     }

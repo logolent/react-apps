@@ -18,14 +18,14 @@ class App extends React.Component {
 
     componentDidMount() {
         setTimeout(() => this.setState({
-            todos: [
-                { id: sid(), title: 'first', completed: false},
-                { id: sid(), title: 'second', completed: false},
-                { id: sid(), title: 'third', completed: false}
-            ],
+            todos: JSON.parse(localStorage.getItem('todos')),
             loading: false
         }), 1000)
     }
+
+    setLocalStorage = () => {
+        localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    };
 
     onToggle = (id) => {
         this.setState(prevState => ({
@@ -35,7 +35,7 @@ class App extends React.Component {
                 }
                 return todo;
             })
-        }))
+        }), this.setLocalStorage)
     };
 
     onAdd = (title) => {
@@ -48,13 +48,15 @@ class App extends React.Component {
                     completed: false
                 }
             ]
-        }))
+        }), this.setLocalStorage);
+
+
     };
 
     onDelete = (id) => {
         this.setState(prevState => ({
             todos: prevState.todos.filter(todo => todo.id !== id)
-        }))
+        }), this.setLocalStorage);
     };
 
     renderTodoList = () => {

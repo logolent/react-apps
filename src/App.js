@@ -57,29 +57,59 @@ class App extends React.Component {
         }))
     };
 
+    renderTodoList = () => {
+        return (
+            <TodoList
+                todos={this.state.todos}
+                onToggle={this.onToggle}
+                onDelete={this.onDelete}
+            />
+        )
+    };
+
+    renderAddTodo = () => {
+        return(
+            <AddTodo
+                onAdd={this.onAdd}
+            />
+        )
+    };
+
+    renderFakeAddTodo = () => {
+        return (
+            <div className="add-todo-fake" onSubmit={this.onSubmitHandler}>
+                <div className="add-todo-fake__input"/>
+                <div className="add-todo-fake__button"/>
+            </div>
+        )
+    };
+
     render() {
         const { todos, loading } = this.state;
 
         return (
             <div className="todo-app">
                 <Header/>
-                {loading ? (
-                    <span>Загрузка</span>
-                ) : todos.length > 0 ? (
-                    <div className="todo-container">
-                        <AddTodo
-                            onAdd={this.onAdd}
-                        />
-                        <TodoList
-                            todos={this.state.todos}
-                            onToggle={this.onToggle}
-                            onDelete={this.onDelete}
-                        />
-                    </div>
-                ) : (
-                    <span>Больше нет дел</span>
-                )}
-
+                <div className="todo-container">
+                    {loading ? (
+                        <>
+                            {this.renderFakeAddTodo()}
+                            <div className="lds-dual-ring"></div>
+                        </>
+                    ) : todos.length > 0 ? (
+                        <>
+                            {this.renderAddTodo()}
+                            {this.renderTodoList()}
+                        </>
+                    ) : (
+                        <>
+                            {this.renderAddTodo()}
+                            <div className="todo-container__empty">
+                                <h2> Больше нет дел </h2>
+                            </div>
+                        </>
+                    )}
+                </div>
             </div>
         );
     }

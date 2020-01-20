@@ -8,23 +8,21 @@ const Layout = ({
 }) => {
     return (
         <div className="todolist-layout">
-            <div className="todolist-layout__container">
-                {TodoAddComponent ? (
-                    <TodoAddComponent/>
-                ) : (
-                    <></>
-                )}
-                {TodoListComponent ? (
-                    <TodoListComponent/>
-                ) : (
-                    <></>
-                )}
-                {TodoDetailsComponent ? (
-                    <TodoDetailsComponent/>
-                ) : (
-                    <></>
-                )}
-            </div>
+            {TodoAddComponent ? (
+                <TodoAddComponent/>
+            ) : (
+                <></>
+            )}
+            {TodoListComponent ? (
+                <TodoListComponent/>
+            ) : (
+                <></>
+            )}
+            {TodoDetailsComponent ? (
+                <TodoDetailsComponent/>
+            ) : (
+                <></>
+            )}
         </div>
     )
 };

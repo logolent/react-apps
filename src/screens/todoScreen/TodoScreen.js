@@ -3,6 +3,7 @@ import sid from "shortid";
 import TodoList from "../../components/todoapp/todoList/TodoList";
 import AddTodo from "../../components/todoapp/addTodo/AddTodo";
 import TodoDetails from "../../components/todoapp/todoDetails/TodoDetails";
+import TodoEmpty from "../../components/todoapp/todoEmpty/TodoEmpty";
 import Layout from "../../components/todoapp/layout/Layout";
 
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
@@ -109,9 +110,7 @@ class TodoScreen extends React.Component {
                     onDelete={this.onDelete}
                 />
             ) : (
-                <div className="todo-container__empty">
-                    <h2> Больше нет дел </h2>
-                </div>
+                <TodoEmpty/>
             )
         )
     };

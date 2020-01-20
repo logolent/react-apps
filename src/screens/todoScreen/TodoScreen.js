@@ -1,9 +1,9 @@
 import React from "react";
 import sid from "shortid";
-import "./TodoScreen.scss";
 import TodoList from "../../components/todoapp/todoList/TodoList";
 import AddTodo from "../../components/todoapp/addTodo/AddTodo";
 import TodoDetails from "../../components/todoapp/todoDetails/TodoDetails";
+import Layout from "../../components/todoapp/layout/Layout";
 
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
@@ -55,8 +55,6 @@ class TodoScreen extends React.Component {
                 }
             ]
         }), this.setLocalStorage);
-
-
     };
 
     onDelete = (id) => {
@@ -76,22 +74,45 @@ class TodoScreen extends React.Component {
         }), this.setLocalStorage);
     };
 
-    renderTodoList = () => {
+    renderAddTodo = () => {
+        const { loading } = this.state;
         return (
-            <TodoList
-                todos={this.state.todos}
-                onToggle={this.onToggle}
-                onDelete={this.onDelete}
-            />
+            loading ? (
+                this.renderFakeAddTodo()
+            ) : (
+                <AddTodo
+                    onAdd={this.onAdd}
+                    preview={this.props.preview}
+                />
+            )
         )
     };
 
-    renderAddTodo = () => {
+    renderFakeAddTodo = () => {
         return (
-            <AddTodo
-                onAdd={this.onAdd}
-                preview={this.props.preview}
-            />
+            <div className="add-todo-fake">
+                <div className="add-todo-fake__input"/>
+                <div className="add-todo-fake__button"/>
+            </div>
+        )
+    };
+
+    renderTodoList = () => {
+        const { todos, loading } = this.state;
+        return (
+            loading ? (
+                <div className="lds-dual-ring"/>
+            ) : todos.length > 0 ? (
+                <TodoList
+                    todos={this.state.todos}
+                    onToggle={this.onToggle}
+                    onDelete={this.onDelete}
+                />
+            ) : (
+                <div className="todo-container__empty">
+                    <h2> Больше нет дел </h2>
+                </div>
+            )
         )
     };
 
@@ -103,57 +124,27 @@ class TodoScreen extends React.Component {
         )
     };
 
-    renderFakeAddTodo = () => {
-        return (
-            <div className="add-todo-fake" onSubmit={this.onSubmitHandler}>
-                <div className="add-todo-fake__input"/>
-                <div className="add-todo-fake__button"/>
-            </div>
-        )
-    };
-
-    renderTodoScreen = () => {
-        const { todos, loading } = this.state;
-        return (
-            <div className="todo-app">
-                <div className="todo-container">
-                    {loading ? (
-                        <>
-                            {this.renderFakeAddTodo()}
-                            <div className="lds-dual-ring"/>
-                        </>
-                    ) : todos.length > 0 ? (
-                        <>
-                            {this.renderAddTodo()}
-                            {this.renderTodoList()}
-                        </>
-                    ) : (
-                        <>
-                            {this.renderAddTodo()}
-                            <div className="todo-container__empty">
-                                <h2> Больше нет дел </h2>
-                            </div>
-                        </>
-                    )}
-                </div>
-            </div>
-        );
-    };
-
     render() {
         return (
             this.props.preview ? (
-                this.renderTodoScreen()
+                <Layout
+                    todoAdd={this.renderAddTodo}
+                    todoList={this.renderTodoList}
+                />
             ) : (
                 <Router>
                     <Switch>
                         <Route path="/todo/:id">
-                            {this.renderTodoDetails()}
+                            <Layout
+                                todoDetails={this.renderTodoDetails}
+                            />
                         </Route>
                         <Route path="/todo">
-                            {this.renderTodoScreen()}
+                            <Layout
+                                todoAdd={this.renderAddTodo}
+                                todoList={this.renderTodoList}
+                            />
                         </Route>
-
                     </Switch>
                 </Router>
             )

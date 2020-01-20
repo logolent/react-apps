@@ -1,5 +1,4 @@
 import React from 'react';
-import './TodoDetails.scss';
 import PropTypes from 'prop-types';
 
 import { useParams, withRouter } from 'react-router-dom';
@@ -24,27 +23,27 @@ const TodoDetails = ({ onUpdate, history }) => {
     };
 
     return (
-        <div className="update-todo">
+        <div className="todo-details">
             {todo === undefined ? (
-                <p className="update-todo__id">
+                <p className="todo-details__id">
                     Todo not found
                 </p>
             ) : (
                 <>
-                    <p className="update-todo__id">
+                    <p className="todo-details__id">
                         Todo id: {todo.id}
                         <br/>
                         Status: {todo.completed ? 'completed' : 'not completed'}
                     </p>
-                    <form className="update-todo__form" onSubmit={onSubmitHandler}>
+                    <form className="todo-details__form" onSubmit={onSubmitHandler}>
                         <input
-                            className="update-todo__input"
+                            className="todo-details__input"
                             type="text"
                             maxLength="50"
                             placeholder={todo.title}
                             ref={input}
                         />
-                        <button className="update-todo__button"> Обновить </button>
+                        <button className="todo-details__button"> Обновить </button>
                     </form>
                 </>
             )}

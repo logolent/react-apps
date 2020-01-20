@@ -1,4 +1,4 @@
-@import "../../styleConsts";
+@import "../../../styleConsts";
 
 .todo {
     width: 100%;
@@ -27,8 +27,8 @@
 
     &__title {
         width: 600px;
+        color: $THIRD_COLOR;
         overflow-wrap: break-word;
-        //white-space: pre-wrap;
     }
 
     &__index {

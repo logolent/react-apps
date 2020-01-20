@@ -1,0 +1,77 @@
+@import "../../styleConsts.scss";
+
+.todo-app {
+    background-color: $BG_COLOR;
+
+    .todo-container {
+        width: 850px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 28px 25px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background-color: $SECONDARY_COLOR;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+
+        &__empty {
+            color: $THIRD_COLOR;
+        }
+
+        .add-todo-fake {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            border-bottom: 3px solid #ffffff;
+
+            &__input {
+                width: 80%;
+                height: 75%;
+
+                background-color: #8c96a8;
+                border-radius: 6px;
+            }
+
+            &__button {
+                width: 15%;
+                height: 75%;
+
+                background-color: #8c96a8;
+                border-radius: 6px;
+            }
+        }
+    }
+}
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #8c96a8;
+    border-color: #8c96a8 transparent #8c96a8 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

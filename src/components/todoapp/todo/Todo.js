@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TodoProps} from "../../propTypes/proptypes";
+import {TodoProps} from "../../../propTypes/proptypes";
+import { Link } from "react-router-dom";
 
 import './Todo.scss';
 
@@ -27,22 +28,27 @@ class Todo extends React.Component {
         const titleStyle = completed ? styles.strike : {};
 
         return (
-            <li
-                className="todo"
-                onClick={this.onToggleHandler}
-            >
+            <li className="todo">
                 <div className="todo__content">
-                    <input className="todo__checkbox" type="checkbox" checked={completed} readOnly/>
+                    <input
+                        onClick={this.onToggleHandler}
+                        className="todo__checkbox"
+                        type="checkbox"
+                        checked={completed}
+                        readOnly/>
                     <span className="todo__index">{index + 1}.</span>
-                    <div className="todo__title" style={titleStyle}>{title}</div>
+                    <Link to={'/todo/' + todo.id}>
+                    <div
+                        className="todo__title"
+                        style={titleStyle}>{title}
+                    </div>
+                    </Link>
                 </div>
 
                 <button
                     className="todo__button"
                     onClick={this.onDeleteHandler}
-                >
-                    X
-                </button>
+                > X </button>
             </li>
         );
     }

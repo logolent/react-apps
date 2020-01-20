@@ -12,7 +12,9 @@ class AddTodo extends React.Component {
     }
 
     componentDidMount() {
-        this.input.current.focus();
+        if (!this.props.preview) {
+            this.input.current.focus();
+        }
     }
 
     onSubmitHandler = (e) => {
@@ -39,7 +41,8 @@ class AddTodo extends React.Component {
 }
 
 AddTodo.propTypes = {
-    onAdd: PropTypes.func.isRequired
+    onAdd: PropTypes.func.isRequired,
+    preview: PropTypes.bool
 };
 
 export default AddTodo;

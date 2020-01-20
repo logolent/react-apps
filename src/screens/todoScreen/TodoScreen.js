@@ -3,6 +3,9 @@ import sid from "shortid";
 import "./TodoScreen.scss";
 import TodoList from "../../components/todoapp/todoList/TodoList";
 import AddTodo from "../../components/todoapp/addTodo/AddTodo";
+import TodoDetails from "../../components/todoapp/todoDetails/TodoDetails";
+
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 class TodoScreen extends React.Component {
     constructor(props) {
@@ -62,6 +65,17 @@ class TodoScreen extends React.Component {
         }), this.setLocalStorage);
     };
 
+    onUpdate = (id, title) => {
+        this.setState(prevState => ({
+            todos: prevState.todos.map(todo => {
+                if (todo.id === id) {
+                    return { ...todo, title }
+                }
+                return todo;
+            })
+        }), this.setLocalStorage);
+    };
+
     renderTodoList = () => {
         return (
             <TodoList
@@ -73,10 +87,18 @@ class TodoScreen extends React.Component {
     };
 
     renderAddTodo = () => {
-        return(
+        return (
             <AddTodo
                 onAdd={this.onAdd}
                 preview={this.props.preview}
+            />
+        )
+    };
+
+    renderTodoDetails = () => {
+        return (
+            <TodoDetails
+                onUpdate={this.onUpdate}
             />
         )
     };
@@ -90,9 +112,8 @@ class TodoScreen extends React.Component {
         )
     };
 
-    render() {
+    renderTodoScreen = () => {
         const { todos, loading } = this.state;
-
         return (
             <div className="todo-app">
                 <div className="todo-container">
@@ -116,6 +137,26 @@ class TodoScreen extends React.Component {
                     )}
                 </div>
             </div>
+        );
+    };
+
+    render() {
+        return (
+            this.props.preview ? (
+                this.renderTodoScreen()
+            ) : (
+                <Router>
+                    <Switch>
+                        <Route path="/todo/:id">
+                            {this.renderTodoDetails()}
+                        </Route>
+                        <Route path="/todo">
+                            {this.renderTodoScreen()}
+                        </Route>
+
+                    </Switch>
+                </Router>
+            )
         );
     }
 }

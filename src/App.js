@@ -22,11 +22,8 @@ const App = () => {
                     </Card>
                 </HomeScreen>
             </Route>
-            <Route exact path="/todo">
+            <Route path="/todo">
                 <TodoScreen/>
-            </Route>
-            <Route path="/todo/:id">
-                <h1>Another page</h1>
             </Route>
         </Switch>
     </Router>

@@ -4,7 +4,7 @@ import TodoScreen from "../todoScreen/TodoScreen";
 import Card from "../../components/card/Card";
 
 
-const HomeScreen = ({children}) => {
+const HomeScreen = () => {
     return (
         <div className="home">
             <Card title="TodoList Preview" linkTo="/todo">

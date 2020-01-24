@@ -3,8 +3,6 @@ import './App.scss';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Card from "./components/card/Card";
-
 import Header from "./components/header/Header";
 import HomeScreen from "./screens/homeScreen/HomeScreen";
 import TodoScreen from "./screens/todoScreen/TodoScreen";
@@ -16,11 +14,7 @@ const App = () => {
         <Header/>
         <Switch>
             <Route exact path="/">
-                <HomeScreen>
-                    <Card title="TodoList Preview" linkTo="/todo">
-                        <TodoScreen preview={true}/>
-                    </Card>
-                </HomeScreen>
+                <HomeScreen/>
             </Route>
             <Route path="/todo">
                 <TodoScreen/>

@@ -1,89 +1,27 @@
 import React from "react";
-import sid from "shortid";
+import PropTypes from 'prop-types';
+
 import TodoList from "../../components/todoapp/todoList/TodoList";
 import AddTodo from "../../components/todoapp/addTodo/AddTodo";
 import TodoDetails from "../../components/todoapp/todoDetails/TodoDetails";
 import TodoEmpty from "../../components/todoapp/todoEmpty/TodoEmpty";
 import Layout from "../../components/todoapp/layout/Layout";
 
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { connect } from "react-redux";
+import { addTodo, deleteTodo, updateTodo, toggleComplete } from "../../actions/todoActions";
 
 class TodoScreen extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            todos: [],
-            loading: true
-        }
-    }
-
-    componentDidMount() {
-        setTimeout(() => this.setState({
-            todos: !this.props.preview ?
-                ( JSON.parse(localStorage.getItem('todos')) || []) : [
-                    {id: '1', title: 'todo 1', completed: false},
-                    {id: '2', title: 'todo 2', completed: true},
-                    {id: '3', title: 'todo 3', completed: true},
-                    {id: '4', title: 'todo 4', completed: false}
-                ],
-            loading: false
-        }), 1000)
-    }
-
-    setLocalStorage = () => {
-        localStorage.setItem('todos', JSON.stringify(this.state.todos));
-    };
-
-    onToggle = (id) => {
-        this.setState(prevState => ({
-            todos: prevState.todos.map(todo => {
-                if (todo.id === id) {
-                    return { ...todo, completed: !todo.completed }
-                }
-                return todo;
-            })
-        }), this.setLocalStorage)
-    };
-
-    onAdd = (title) => {
-        this.setState(prevState => ({
-            todos: [
-                ...prevState.todos,
-                {
-                    id: sid(),
-                    title,
-                    completed: false
-                }
-            ]
-        }), this.setLocalStorage);
-    };
-
-    onDelete = (id) => {
-        this.setState(prevState => ({
-            todos: prevState.todos.filter(todo => todo.id !== id)
-        }), this.setLocalStorage);
-    };
-
-    onUpdate = (id, title) => {
-        this.setState(prevState => ({
-            todos: prevState.todos.map(todo => {
-                if (todo.id === id) {
-                    return { ...todo, title }
-                }
-                return todo;
-            })
-        }), this.setLocalStorage);
-    };
 
     renderAddTodo = () => {
-        const { loading } = this.state;
+        const { loading, addTodo, preview } = this.props;
         return (
             loading ? (
                 this.renderFakeAddTodo()
             ) : (
                 <AddTodo
-                    onAdd={this.onAdd}
-                    preview={this.props.preview}
+                    onAdd={addTodo}
+                    preview={preview}
                 />
             )
         )
@@ -99,15 +37,15 @@ class TodoScreen extends React.Component {
     };
 
     renderTodoList = () => {
-        const { todos, loading } = this.state;
+        const { todos, loading, deleteTodo, toggleComplete } = this.props;
         return (
             loading ? (
                 <div className="lds-dual-ring"/>
             ) : todos.length > 0 ? (
                 <TodoList
-                    todos={this.state.todos}
-                    onToggle={this.onToggle}
-                    onDelete={this.onDelete}
+                    todos={todos}
+                    onToggle={toggleComplete}
+                    onDelete={deleteTodo}
                 />
             ) : (
                 <TodoEmpty/>
@@ -116,9 +54,10 @@ class TodoScreen extends React.Component {
     };
 
     renderTodoDetails = () => {
+        const { updateTodo } = this.props;
         return (
             <TodoDetails
-                onUpdate={this.onUpdate}
+                onUpdate={updateTodo}
             />
         )
     };
@@ -151,4 +90,24 @@ class TodoScreen extends React.Component {
     }
 }
 
-export default TodoScreen;
+TodoScreen.propTypes = {
+    todos: PropTypes.array,
+    loading: PropTypes.bool,
+    addTodo: PropTypes.func,
+    deleteTodo: PropTypes.func,
+    toggleComplete: PropTypes.func
+};
+
+const mapStateToProps = state => ({
+    todos: state.todo.todos,
+    loading: state.todo.loading
+});
+
+const mapDispatchToProps = ({
+    addTodo,
+    deleteTodo,
+    updateTodo,
+    toggleComplete
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoScreen);

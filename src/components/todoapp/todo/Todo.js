@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {TodoProps} from "../../../propTypes/proptypes";
-import { Link } from "react-router-dom";
 
 import './Todo.scss';
 
@@ -37,12 +36,10 @@ class Todo extends React.Component {
                         checked={completed}
                         readOnly/>
                     <span className="todo__index">{index + 1}.</span>
-                    <Link to={'/todo/' + todo.id}>
                     <div
                         className="todo__title"
                         style={titleStyle}>{title}
                     </div>
-                    </Link>
                 </div>
 
                 <button

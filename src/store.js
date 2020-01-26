@@ -1,7 +1,8 @@
-import { createStore, combineReducers } from "redux";
+import {createStore, combineReducers, applyMiddleware, compose} from "redux";
 import todoReducer from "./reducers/todoReducer";
 import storage from 'redux-persist/es/storage';
 import { persistStore, persistReducer } from "redux-persist";
+import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
     todo: todoReducer
@@ -17,7 +18,13 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export default (enabledPersist) => {
     const store = createStore(
         enabledPersist? persistedReducer : rootReducer,
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        compose(
+            applyMiddleware(thunk),
+            typeof window.__REDUX_DEVTOOLS_EXTENSION__ === "undefined"
+                ? a => a
+                : window.__REDUX_DEVTOOLS_EXTENSION__ &&
+                window.__REDUX_DEVTOOLS_EXTENSION__()
+        )
     );
 
     if (!enabledPersist) {

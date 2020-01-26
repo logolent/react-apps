@@ -2,12 +2,8 @@ import {TODO_ACTIONS} from "../actions/constants";
 import sid from "shortid";
 
 const initialState = {
-    todos: [
-        {id: '1', title: 'title 1', completed: false},
-        {id: '2', title: 'title 2', completed: false},
-        {id: '3', title: 'title 3', completed: false}
-    ],
-    loading: false
+    todos: [],
+    loading: true
 };
 
 function todoReducer(state = initialState, { type, payload }) {
@@ -58,10 +54,18 @@ function todoReducer(state = initialState, { type, payload }) {
         }
 
         case TODO_ACTIONS.SET_LOADING: {
-            const { state } = payload;
+            const { indicator } = payload;
             return {
                 ...state,
-                loading: state
+                loading: indicator
+            }
+        }
+
+        case TODO_ACTIONS.UPDATE_TODOS: {
+            const { todos } = payload;
+            return {
+                ...state,
+                todos
             }
         }
 

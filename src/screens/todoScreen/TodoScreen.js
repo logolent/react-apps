@@ -10,9 +10,13 @@ import AddTodoLoader from "../../components/todoapp/addTodoLoader/AddTodoLoader"
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
-import { addTodo, deleteTodo, updateTodo, toggleComplete } from "../../actions/todoActions";
+import { addTodo, deleteTodo, updateTodo, toggleComplete, loadTodos } from "../../actions/todoActions";
 
 class TodoScreen extends React.Component {
+
+    componentDidMount() {
+        this.props.loadTodos();
+    }
 
     renderAddTodo = () => {
         const { loading, addTodo, preview } = this.props;
@@ -96,7 +100,8 @@ TodoScreen.propTypes = {
     loading: PropTypes.bool,
     addTodo: PropTypes.func,
     deleteTodo: PropTypes.func,
-    toggleComplete: PropTypes.func
+    toggleComplete: PropTypes.func,
+    loadTodos: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -108,7 +113,8 @@ const mapDispatchToProps = ({
     addTodo,
     deleteTodo,
     updateTodo,
-    toggleComplete
+    toggleComplete,
+    loadTodos
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoScreen);

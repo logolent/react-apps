@@ -6,6 +6,7 @@ import AddTodo from "../../components/todoapp/addTodo/AddTodo";
 import TodoDetails from "../../components/todoapp/todoDetails/TodoDetails";
 import TodoEmpty from "../../components/todoapp/todoEmpty/TodoEmpty";
 import Layout from "../../components/todoapp/layout/Layout";
+import AddTodoLoader from "../../components/todoapp/addTodoLoader/AddTodoLoader";
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -17,7 +18,7 @@ class TodoScreen extends React.Component {
         const { loading, addTodo, preview } = this.props;
         return (
             loading ? (
-                this.renderFakeAddTodo()
+                <AddTodoLoader/>
             ) : (
                 <AddTodo
                     onAdd={addTodo}
@@ -27,14 +28,14 @@ class TodoScreen extends React.Component {
         )
     };
 
-    renderFakeAddTodo = () => {
+    /*renderFakeAddTodo = () => {
         return (
             <div className="add-todo-fake">
                 <div className="add-todo-fake__input"/>
                 <div className="add-todo-fake__button"/>
             </div>
         )
-    };
+    };*/
 
     renderTodoList = () => {
         const { todos, loading, deleteTodo, toggleComplete } = this.props;

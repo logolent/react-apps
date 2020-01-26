@@ -3,12 +3,29 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import store from "./store";
+import createStore from "./store";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+const enablePersist = true;
+const { store, persistor } = createStore(enablePersist);
+
+const ConditionalWrapper = ({condition, wrap, children}) => condition? wrap(children) : children;
+
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <ConditionalWrapper
+            condition={enablePersist}
+            wrap={(children) =>
+                <PersistGate loading={<div>test loader</div>} persistor={persistor}>
+                    {children}
+                </PersistGate>
+            }
+        >
+            <App/>
+        </ConditionalWrapper>
+
+
     </Provider>,
     document.getElementById('root')
 );

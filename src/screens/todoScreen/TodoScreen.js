@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 
 import TodoList from "../../components/todoapp/todoList/TodoList";
 import AddTodo from "../../components/todoapp/addTodo/AddTodo";
-import TodoDetails from "../../components/todoapp/todoDetails/TodoDetails";
 import TodoEmpty from "../../components/todoapp/todoEmpty/TodoEmpty";
 import Layout from "../../components/todoapp/layout/Layout";
 import AddTodoLoader from "../../components/todoapp/addTodoLoader/AddTodoLoader";
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
 import { addTodo, deleteTodo, updateTodo, toggleComplete, loadTodos } from "../../actions/todoActions";
 
@@ -58,39 +56,12 @@ class TodoScreen extends React.Component {
         )
     };
 
-    renderTodoDetails = () => {
-        const { updateTodo } = this.props;
-        return (
-            <TodoDetails
-                onUpdate={updateTodo}
-            />
-        )
-    };
-
     render() {
         return (
-            this.props.preview ? (
-                <Layout
-                    todoAdd={this.renderAddTodo}
-                    todoList={this.renderTodoList}
-                />
-            ) : (
-                <Router>
-                    <Switch>
-                        <Route path="/todo/:id">
-                            <Layout
-                                todoDetails={this.renderTodoDetails}
-                            />
-                        </Route>
-                        <Route path="/todo">
-                            <Layout
-                                todoAdd={this.renderAddTodo}
-                                todoList={this.renderTodoList}
-                            />
-                        </Route>
-                    </Switch>
-                </Router>
-            )
+            <Layout
+                todoAdd={this.renderAddTodo}
+                todoList={this.renderTodoList}
+            />
         );
     }
 }

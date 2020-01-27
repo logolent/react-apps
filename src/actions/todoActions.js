@@ -1,4 +1,5 @@
 import {TODO_ACTIONS} from "./constants";
+import {isTodosExist} from "../selectors/todoSelectors";
 
 export const addTodo = title => ({
     type: TODO_ACTIONS.ADD_TODO,
@@ -38,7 +39,7 @@ const stubTodos = [
 
 export const loadTodos = () =>
     async (dispatch, getState) => {
-        const todosExist = Boolean(getState().todo.todos.length);
+        const todosExist = isTodosExist(getState());
         if (!todosExist) {
             await setTimeout(() => {
                 dispatch(updateTodos(stubTodos));

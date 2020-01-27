@@ -9,6 +9,7 @@ import AddTodoLoader from "../../components/todoapp/addTodoLoader/AddTodoLoader"
 
 import { connect } from "react-redux";
 import { addTodo, deleteTodo, updateTodo, toggleComplete, loadTodos } from "../../actions/todoActions";
+import {getActiveTodosCount, getCurrentTodos, isLoading} from "../../selectors/todoSelectors";
 
 class TodoScreen extends React.Component {
 
@@ -40,16 +41,26 @@ class TodoScreen extends React.Component {
     };*/
 
     renderTodoList = () => {
-        const { todos, loading, deleteTodo, toggleComplete } = this.props;
+        const {
+            todos,
+            loading,
+            deleteTodo,
+            toggleComplete,
+            activeTodoCount
+        } = this.props;
+
         return (
             loading ? (
                 <div className="lds-dual-ring"/>
             ) : todos.length > 0 ? (
-                <TodoList
-                    todos={todos}
-                    onToggle={toggleComplete}
-                    onDelete={deleteTodo}
-                />
+                <>
+                    <h2>Незавершенных дел {activeTodoCount}</h2>
+                    <TodoList
+                        todos={todos}
+                        onToggle={toggleComplete}
+                        onDelete={deleteTodo}
+                    />
+                </>
             ) : (
                 <TodoEmpty/>
             )
@@ -72,12 +83,14 @@ TodoScreen.propTypes = {
     addTodo: PropTypes.func,
     deleteTodo: PropTypes.func,
     toggleComplete: PropTypes.func,
-    loadTodos: PropTypes.func
+    loadTodos: PropTypes.func,
+    activeTodoCount: PropTypes.number
 };
 
 const mapStateToProps = state => ({
-    todos: state.todo.todos,
-    loading: state.todo.loading
+    todos: getCurrentTodos(state),
+    loading: isLoading(state),
+    activeTodoCount: getActiveTodosCount(state)
 });
 
 const mapDispatchToProps = ({

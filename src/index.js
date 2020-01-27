@@ -17,15 +17,13 @@ ReactDOM.render(
         <ConditionalWrapper
             condition={enablePersist}
             wrap={(children) =>
-                <PersistGate loading={<div>test loader</div>} persistor={persistor}>
+                <PersistGate loading={null} persistor={persistor}>
                     {children}
                 </PersistGate>
             }
         >
             <App/>
         </ConditionalWrapper>
-
-
     </Provider>,
     document.getElementById('root')
 );

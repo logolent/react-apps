@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from "./components/header/Header";
 import HomeScreen from "./screens/homeScreen/HomeScreen";
 import TodoScreen from "./screens/todoScreen/TodoScreen";
+import RegistrationScreen from "./screens/registrationScreen/RegistrationScreen";
 
 
 const App = () => {
@@ -18,6 +19,9 @@ const App = () => {
             </Route>
             <Route path="/todo">
                 <TodoScreen/>
+            </Route>
+            <Route exact path="/registration">
+                <RegistrationScreen/>
             </Route>
         </Switch>
     </Router>

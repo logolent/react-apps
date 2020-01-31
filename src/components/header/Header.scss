@@ -13,4 +13,8 @@
     font-size: 32px;
     color: #FFFFFF;
     background-color: $MAIN_COLOR;
+
+    & p {
+        margin-right: 20px;
+    }
 }

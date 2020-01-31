@@ -26,7 +26,7 @@ const FormRadio = React.forwardRef(
 );
 
 FormRadio.propTypes = {
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     options: PropTypes.array.isRequired,
     selectedValue: PropTypes.string,
     onChange: PropTypes.func.isRequired

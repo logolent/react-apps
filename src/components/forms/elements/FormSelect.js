@@ -13,7 +13,7 @@ const FormSelect = React.forwardRef(({ name, options = [], selectedValue, onChan
 });
 
 FormSelect.propTypes = {
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     options: PropTypes.array.isRequired,
     selectedValue: PropTypes.string,
     onChange: PropTypes.func.isRequired

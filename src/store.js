@@ -3,9 +3,11 @@ import todoReducer from "./reducers/todoReducer";
 import storage from 'redux-persist/lib/storage';
 import { persistStore, persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
+import {reducer as formReducer} from 'redux-form';
 
 const rootReducer = combineReducers({
-    todo: todoReducer
+    todo: todoReducer,
+    form: formReducer
 });
 
 const persistConfig = {

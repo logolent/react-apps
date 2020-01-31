@@ -1,5 +1,6 @@
 import React from "react";
 import FormikForm from "../../components/forms/formikForm/FormikForm";
+import ReduxForm from "../../components/forms/reduxForm/ReduxForm";
 
 
 const RegistrationScreen = () => (
@@ -8,6 +9,7 @@ const RegistrationScreen = () => (
         <FormikForm/>
         <br/>
         <h2> Redux-form </h2>
+        <ReduxForm/>
     </>
 );
 
